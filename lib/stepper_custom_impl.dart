@@ -106,60 +106,72 @@ class _StepperCustomImplState extends State<StepperCustomImpl> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(
-              icon: Icon(
-                Icons.skip_previous,
-                size: 40,
-                color: Colors.blueGrey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _currentStep = 0;
-                });
-              }),
-          IconButton(
-              icon: Icon(
-                Icons.navigate_before,
-                size: 40,
-                color: Colors.blueGrey,
-              ),
-              onPressed: () {
-                if (_currentStep > 0) {
+          Visibility(
+            visible: _currentStep > 0,
+            child: IconButton(
+                icon: Icon(
+                  Icons.skip_previous,
+                  size: 40,
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
                   setState(() {
-                    _currentStep--;
+                    _currentStep = 0;
                   });
-                }
-              }),
+                }),
+          ),
+          Visibility(
+            visible: _currentStep > 0,
+            child: IconButton(
+                icon: Icon(
+                  Icons.navigate_before,
+                  size: 40,
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  if (_currentStep > 0) {
+                    setState(() {
+                      _currentStep--;
+                    });
+                  }
+                }),
+          ),
           Container(
             child: Text(
               '${_currentStep.toInt() + 1}',
               style: TextStyle(fontSize: 26, color: Colors.blueGrey),
             ),
           ),
-          IconButton(
-              icon: Icon(
-                Icons.navigate_next,
-                size: 40,
-                color: Colors.blueGrey,
-              ),
-              onPressed: () {
-                if (_currentStep + 1 < _mySteps.length) {
+          Visibility(
+            visible: _currentStep + 1 < _mySteps.length,
+            child: IconButton(
+                icon: Icon(
+                  Icons.navigate_next,
+                  size: 40,
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
+                  if (_currentStep + 1 < _mySteps.length) {
+                    setState(() {
+                      _currentStep++;
+                    });
+                  }
+                }),
+          ),
+          Visibility(
+            visible: _currentStep + 1 < _mySteps.length,
+            child: IconButton(
+                icon: Icon(
+                  Icons.skip_next,
+                  size: 40,
+                  color: Colors.blueGrey,
+                ),
+                onPressed: () {
                   setState(() {
-                    _currentStep++;
+                    _currentStep = _mySteps.length.toDouble() - 1;
                   });
-                }
-              }),
-          IconButton(
-              icon: Icon(
-                Icons.skip_next,
-                size: 40,
-                color: Colors.blueGrey,
-              ),
-              onPressed: () {
-                setState(() {
-                  _currentStep = _mySteps.length.toDouble() - 1;
-                });
-              }),
+                }),
+          ),
         ],
       ),
     );
